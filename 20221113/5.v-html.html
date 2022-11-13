@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+    <div id="app">
+        <p v-html="vHtmlLink">링크1</p>
+        <a :href="vBindLink">링크2</a>
+
+
+    </div>
+    
+    <script>
+        new Vue({
+            el : '#app',
+            data : {
+                vHtmlLink : "<a href='http://medium.com'>링크11</a>",
+                vBindLink : "http://medium.com",
+
+
+
+            }
+        })
+    </script>
+</body>
+</html>
