@@ -17,12 +17,15 @@
   <!--css로 애니메이션 주려면
     1. 시작전 class명
     2. 애니메이션 끝난 후 class 명
-    3. 원할 때 2번 class 명 부착-->
-  <div class="start">
+    3. 원할 때 2번 class 명 부착(모달창이 열렸을 때)
+    아래 :class는 object형태인데 만약 "모달창열렸니"가 true이면 end 클래스를 붙는다. 
+  -->
+  
+  <Transition name="fade">
+  <!-- <div class="start" :class="{ end : 모달창보이나}"> -->
   <Modal @closeButton ="모달창보이나=false;" 
   :외부데이터="외부데이터" :사용자클릭="사용자클릭" :모달창보이나="모달창보이나"/>
-  </div>
-  
+  </Transition>
 
 
   <div class="menu">
@@ -30,14 +33,20 @@
     {{a}}
     </a>
   </div>
-<!-- 
-  <Discount :이름="오브젝트.name" :나이="오브젝트.age"/>
-  <Discount v-bind="오브젝트"/> -->
+
+
   <Discount :오브젝트="오브젝트"/>
+
+  <button @click="priceSort">가격순정렬</button>
+  <button @click="sortBack">되돌리기</button>
+  <button @click="titleSort">타이틀순</button>
+  <button @click="show50Below">50만원 이하만</button>
+
+
+
   
 
- <!-- <Modal :외부데이터="외부데이터"/> -->
-  <!-- <Modal @openModal = "$event"  $event는 자식이 보낸 데이터를 받는 것.--> 
+
   <Card  @openModal = "모달창보이나 = true; 사용자클릭=$event" 
   :외부데이터="외부데이터" />
   
@@ -75,12 +84,43 @@ export default {
     return {
       오브젝트 : {name : 'kim', age :20},
       메뉴들 : ['Home', 'Shop', 'About'],
-      외부데이터 : data,
+      외부데이터 : [...data],
+      원룸들오리지널 : [...data],
       사용자클릭 : 0,
       모달창보이나 : false,
 
     }
   },
+  methods:{
+    priceSort(){
+      this.외부데이터.sort(function(a,b){
+        return a.price-b.price;
+       // return b.price-a.price; 역순
+        
+        //만약 object에서 object를 빼면 값이 나오지 않는다. 
+      })
+    },
+
+    sortBack(){
+      //array 자료에서 등호는 값을 공유해주세요라는 뜻
+      this.외부데이터 = [...this.원룸들오리지널];
+      
+    },
+    titleSort(){
+      //this.외부데이터.title.sort();
+      this.외부데이터.sort(function(a,b){
+        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+      });
+
+    },
+    show50Below(){
+      this.외부데이터.price < 500000
+    }
+    
+  },
+
+ 
+
   components : {
     // 디스카운트 : Discount,
     Discount,
@@ -139,8 +179,31 @@ div{
 }
 
 .start{
-  opacity: ;
+  opacity: 0;
+  /*이 클래스에 있는 애니메이션 변할 때 1초에 걸려 스무스하게 변한다.*/
+  transition : all 1s;
 }
+
+.end{
+  opacity: 1;
+}
+
+/*시작스타일*/
+.fade-enter-from{
+  transform:  translateY(-1000px);
+  opacity :0;
+}
+.fade-enter-active{
+  transition: all 1s;
+}
+/*끝 스타일*/
+.fade-enter-to{
+  transform:  translateY(0px);
+  opacity :1;
+}
+
+
+
 </style>
 
 
