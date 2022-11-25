@@ -60,7 +60,14 @@ export default {
         모달창보이나 : Boolean,
         사용자클릭 : Number,
 
-    }
+    },
+
+    beforeUpdate(){
+        if(this.month == 2){
+            alert('2는 안됨');
+            this.month =1;
+        }
+    },
 
 }
 </script>

@@ -34,8 +34,9 @@
     </a>
   </div>
 
+ <!-- <Discount :오브젝트="오브젝트" :할인가격="할인가격" v-if="showDiscount == true"/> -->
 
-  <Discount :오브젝트="오브젝트"/>
+  <Discount :오브젝트="오브젝트" :할인가격퍼센트="할인가격퍼센트" />
 
   <button @click="priceSort">가격순정렬</button>
   <button @click="sortBack">되돌리기</button>
@@ -82,12 +83,14 @@ import Card from './Card.vue'
 export default {
   data :function(){
     return {
+      showDiscount : true,
       오브젝트 : {name : 'kim', age :20},
       메뉴들 : ['Home', 'Shop', 'About'],
       외부데이터 : [...data],
       원룸들오리지널 : [...data],
       사용자클릭 : 0,
       모달창보이나 : false,
+      할인가격퍼센트 : 30,
 
     }
   },
@@ -120,6 +123,27 @@ export default {
   },
 
  
+  // mounted(){
+  //   //App.vue가 mount되고 나서 실행하고 싶음 여기에 작성
+  //   //setTimeout(()=>{})
+  //   //setTimeout(function(){
+  //   setTimeout(()=>{
+
+  //     //저거 배너 닫아주세요.
+  //     this.showDiscount = false;
+  //   }, 2000);
+  // },
+
+  mounted(){
+    setInterval(()=>{
+      --this.할인가격퍼센트
+      
+    },1000)
+  },
+
+  created(){
+
+  },
 
   components : {
     // 디스카운트 : Discount,
