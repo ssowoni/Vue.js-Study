@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초 익히기</title>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- {{person.name}} {{person.age}}  -->
+        {{otherMethod()}} 
+        <input type="text" value="hello">
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data :{
+                person : {
+                name : '소원',
+                age : 34
+                },
+                inputData : 'hello'
+            },
+            methods : {
+                //함수 사용이 가능하다.
+                nextYear : function(){
+                    //this 안에 위에서 선언한 data들을 넣어준다.
+                    return this.person.name + '는 내년에' + (this.person.age +1) + '살 입니다.'
+                },
+                //이렇게 함수 줄여서 사용 가능하다. 
+                otherMethod(){
+                    return this.nextYear();
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
