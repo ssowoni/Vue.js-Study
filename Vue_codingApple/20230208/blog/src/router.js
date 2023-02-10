@@ -2,13 +2,27 @@ import { createWebHistory, createRouter } from "vue-router"; //경로가 아닌 
 import List from './components/List.vue'
 import Home from './components/Home.vue'
 import Detail from './components/Detail.vue'
+import Author from './components/Author.vue'
+import Comment from './components/Comment.vue'
+
 
 
 
 const routes = [
   {
     path : "/detail/:id",
-    component:Detail
+    component:Detail,
+    children:[{
+      // /derail/id/author
+      path:"author",
+      component:Author
+    },
+    {
+      ///derail/id/comment
+      path:"comment",
+      component:Comment
+    }
+    ]
   } , 
   {
     path: "/list",
