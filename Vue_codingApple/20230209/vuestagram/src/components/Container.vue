@@ -4,23 +4,17 @@
   <Post v-if="step==0" :게시글들="게시글들"></Post>
 
   <!-- 필터선택페이지 -->
-  <div v-if="step==1">
-    <div class="upload-image" :style="[`background-image : url(${image})`]"></div>
-    <div class="filters">
-        <FilterBox></FilterBox>
-        <FilterBox></FilterBox>
-        <FilterBox></FilterBox>
-        <FilterBox></FilterBox>
-        <FilterBox></FilterBox>
-        
+  <div v-if="step==1" >
+    <div  :class=" 적용한필터 + ' upload-image'" :style="[`background-image : url(${image})`]"></div>
+    <div class="filters" >
+        <FilterBox :image="image" :filter="i" v-for="i in filter" :key="i"></FilterBox>
        <!--  <div class="filter-1"></div> -->
-    
     </div>
   </div>
 
 <!-- 글작성페이지 -->
 <div v-if="step==2">
-  <div class="upload-image" :style="[`background-image : url(${image})`]"></div>
+  <div :class=" 적용한필터 +' upload-image'" :style="[`background-image : url(${image})`]"></div>
   <div class="write">
     <textarea class="write-box" @input="$emit('content',$event.target.value)">write!</textarea>
   </div>
@@ -31,17 +25,27 @@
 
 <script>
 import Post from './Post.vue'
+import FilterBox from './FilterBox.vue'
 
 export default {
     name : 'Container',
+    data(){
+      return{
+        filter : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", 
+"inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", 
+"reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"]
+      }
+    },
     components : {
         Post,
+        FilterBox,
 
     },
     props :{
         게시글들 : Array,
         step : Number,
         image : String,
+        적용한필터: String
     }
 }
 </script>

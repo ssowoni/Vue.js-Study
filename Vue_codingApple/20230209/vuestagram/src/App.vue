@@ -11,8 +11,29 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :게시글들="게시글들" :step="step" :image="image" @content="작성한글 = $event"/>
+  <h4>안녕 {{ $store.state.name }}</h4>
+  <button @click="$store.commit('이름변경')">버튼</button>
+  <h4>나이 : {{ $store.state.age }}</h4>
+  <button @click="$store.commit('나이변경',10)">버튼</button>
+
+  <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')">더보기</button>
+
+<!-- 만약 데이터를 변경하려면 아래와 같이 직접 변경하는 게 아니라
+    store.js에 상태 바꿔줘! 라고 부탁을하는 코드를 짜야한다. 위와 같이.   
+  <button @click="$store.state.name = '박'">버튼</button> -->
+
+
+  <p>{{ now() }} {{ 카운터 }}</p>
+  <button @click="카운터++">버튼</button>
+
+  <Container :게시글들="게시글들" :step="step" :image="image" :적용한필터="적용한필터" @content="작성한글 = $event"/>
   <button @click="more">더보기</button>
+
+
+
+
+
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -55,13 +76,30 @@ export default {
         step :0,
         image : '',
         작성한글 : '',
+        적용한필터 : '',
+        카운터 :0,
     }
   },
   components: {
     Container,
    
   },
+  computed : {
+    //computed 함수는 사용할 때마다 실행되지 않는다.
+    //즉) 처음 실행하고 값을 간직한다. 
+    now2(){
+      return new Date()
+    }
+  },
+
   methods : {
+    //methods 함수는 사용할 때마다 실행됨
+    now(){
+      return new Date()
+    },
+
+
+
     more(){
     
 
@@ -112,11 +150,17 @@ export default {
         date: "May 15",
         liked: false,
         content: this.작성한글,
-        filter: "perpetua"
+        filter: this.적용한필터
     };
       this.게시글들.unshift(내게시물); //왼쪽의 array에 자료를 집어넣어준다. 맨 왼쪽에 집어넣음
       this.step=0;
     }
+  },
+  mounted(){
+    this.emitter.on('적용한필터',(a)=>{
+      this.적용한필터 = a
+      console.log(a); //다른 컴포넌트에서 발사한 데이터가 a
+    })
   }
 }
 </script>

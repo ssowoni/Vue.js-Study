@@ -6,9 +6,11 @@
       <div class="profile" :style="{backgroundImage : `url(${ 게시글들[i].userImage })`}"></div>
       <span class="profile-name">{{게시글들[i].name}}</span>
     </div>
-    <div class="post-body" :style="{backgroundImage : `url(${ 게시글들[i].postImage })`}"></div>
+    <div :class="게시글들[i].filter +' post-body'" :style="{backgroundImage : `url(${ 게시글들[i].postImage })`}"
+    @click="$store.commit('좋아요수증가')" ></div>
     <div class="post-content">
-      <p>{{게시글들[i].likes}}Likes</p>
+      <!-- <p>{{게시글들[i].likes}}Likes</p> -->
+      <p>{{$store.state.likes}}Likes</p>
       <p><strong>{{게시글들[i].filter}}</strong> {{게시글들[i].content}}</p>
       <p class="date">{{게시글들[i].date}}</p>
     </div>
